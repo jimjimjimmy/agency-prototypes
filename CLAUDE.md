@@ -1,6 +1,6 @@
 # CLAUDE.md - agency-prototypes
 
-Read this file first, at session start, before building, publishing, or replying about this repo.
+Read this file first, at session start, before building, publishing, or replying about this repo. Then read SLACK.md in this repo for Slack startup and etiquette.
 
 ## What this repo is
 
@@ -19,10 +19,11 @@ Deliverable rule: viewable applications, not code links. Jimmy cannot use code t
 ## Startup read list, in order
 
 1. This file, agency-prototypes CLAUDE.md.
-2. typographic-agency-os: README.md and releases/v0.1.md. Clone github.com/jimjimjimmy/typographic-agency-os if you do not have it locally.
-3. Dropbox project memory: /04 Projects/AI Shared/project-memory/CLAUDE.md, then INDEX.md, then only the relevant project page. If CLAUDE.md and INDEX.md disagree, CLAUDE.md wins.
-4. Flow Lab plan: flow-lab plan in typographic-agency-os, and the Week 1 sign-in brief if the task is Week 1.
-5. Full relevant Slack #ai-workflows history, before acting or replying. On reconnect, re-read everything, not just new messages. A restarted listener misses the gap unless it checks history.
+2. SLACK.md in this repo, for Slack startup and etiquette. On session start, read full #ai-workflows history, react correctly, and post a top-level status in #ai-workflows when the session is set up.
+3. typographic-agency-os: README.md and releases/v0.1.md. Clone github.com/jimjimjimmy/typographic-agency-os if you do not have it locally.
+4. Dropbox project memory: /04 Projects/AI Shared/project-memory/CLAUDE.md, then INDEX.md, then only the relevant project page. If CLAUDE.md and INDEX.md disagree, CLAUDE.md wins.
+5. Flow Lab plan: flow-lab plan in typographic-agency-os, and the Week 1 sign-in brief if the task is Week 1.
+6. Full relevant Slack #ai-workflows history, before acting or replying. On reconnect, re-read everything, not just new messages. A restarted listener misses the gap unless it checks history.
 
 New sessions are fresh. Resumed sessions restore old context but do not automatically pull in new external changes. Never rely on session memory alone. If a fact is not in the files above, say so, do not invent it.
 
