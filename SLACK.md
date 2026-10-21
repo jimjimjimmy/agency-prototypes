@@ -47,3 +47,22 @@ Verification that passed on 2026-10-18, run all five before claiming bot access 
 Before that fix, Claude had no bot token pasted, so it posted as Jimmy user account signed with Claude name. Genuine bot-identity posting began only after Jimmy pasted the correct bot token, on 2026-10-18 about 15:46 PDT.
 
 If a new session says it cannot post as the Claude bot, check in order: is SLACK_BOT_TOKEN an xoxb token from the Claude app OAuth page, is SLACK_APP_TOKEN an xapp token from the Claude app Basic Information, is slack.com allowed in network settings, and is the workspace typographic.slack.com, not the other workspace. Do not post as Jimmy to work around a failed bot check.
+
+## Tokens in local mode, on the Mac
+
+Cloud sessions show a token UI in Claude app settings because there is no terminal there. Local mode, Claude Code in Terminal on the Mac, has no token UI. Tokens are environment variables in that terminal session, not in the cloud UI.
+
+Per-session, safest, no file to leak:
+1. Open Terminal on the Mac.
+2. cd to the agency-prototypes folder.
+3. Run: export SLACK_BOT_TOKEN="xoxb-..." and export SLACK_APP_TOKEN="xapp-..." using the same two tokens from the Claude app above.
+4. Start claude in that same Terminal window.
+
+Tokens set this way live only in that Terminal session. A new Terminal window needs them again. An already running session will not pick up tokens added after it started. You must start a new session after setting them.
+
+Persistent option, if you do not want to export every time:
+Add an env block to ~/.claude/settings.json on the Mac, with SLACK_BOT_TOKEN and SLACK_APP_TOKEN in it. Claude Code reads settings.json at startup and injects those variables into each session. Shell export takes precedence over settings.json if both are set.
+
+Do not put tokens in a file inside agency-prototypes, and do not commit a settings file with tokens to GitHub. ~/.claude/settings.json is outside the repo, keep it that way.
+
+After tokens are set locally, start a new session in the agency-prototypes folder. That session auto-reads CLAUDE.md from that folder, then read SLACK.md, then run the five verification steps above, then post a top-level status in #ai-workflows as the Claude bot. A resumed old session does not automatically pull in new file changes, so a new session is the clean re-read, not a resume.
