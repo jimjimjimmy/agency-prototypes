@@ -20,3 +20,30 @@ Work channel: #ai-workflows in typographic.slack.com. Important work goes top-le
 - Muse bot posts as Muse.
 - Claude bot posts as Claude, when its bot token session is active.
 - A Claude app chat session using Jimmy Slack integration posts as Jimmy. That session must not post agency results directly to Slack as Jimmy. Relay through Muse or through the Mac Claude Code session that has the bot token.
+
+## How we made Claude use the bot last time
+
+This is the setup that worked on 2026-10-18, in typographic.slack.com, not in the other workspace. Do not redo it in the wrong workspace.
+
+Slack app for Claude: app A0CB10YR23S, named Claude. Muse app is different: A0CB10KGV5W, named Muse. Do not mix their tokens.
+
+Jimmy pastes two tokens into Claude setup, by hand, never in chat:
+1. Bot User OAuth Token, starts xoxb, from api.slack.com/apps, Claude app, OAuth and Permissions page. This is SLACK_BOT_TOKEN. It is used for Web API calls like chat.postMessage and reactions.add.
+2. App-Level Token, starts xapp, from Basic Information, App-Level Tokens, for Socket Mode. This is SLACK_APP_TOKEN.
+
+Do not use the tokens at the bottom of the app config page labeled Your App Configuration Tokens. Those expire in about 11 hours and are not the bot token.
+
+Do not swap the two token types. Putting an xapp token in SLACK_BOT_TOKEN gives auth.test with no user_id or bot_id. Putting an xoxb token in the app-level slot fails with not_allowed_token_type.
+
+Also allow slack.com in Claude environment settings, Network access, Limited, Allowed domains. Without that, Slack API calls were blocked by the sandbox proxy with 403, even with correct tokens.
+
+Verification that passed on 2026-10-18, run all five before claiming bot access works:
+1. Bot auth.test returns user_id U0C9R8BK739 and bot_id B0CAAAD3476.
+2. App-token auth.test returns app_id A0CB10YR23S.
+3. chat.postMessage to #ai-workflows succeeds.
+4. reactions.add with thumbs up succeeds.
+5. Threaded reply succeeds.
+
+Before that fix, Claude had no bot token pasted, so it posted as Jimmy user account signed with Claude name. Genuine bot-identity posting began only after Jimmy pasted the correct bot token, on 2026-10-18 about 15:46 PDT.
+
+If a new session says it cannot post as the Claude bot, check in order: is SLACK_BOT_TOKEN an xoxb token from the Claude app OAuth page, is SLACK_APP_TOKEN an xapp token from the Claude app Basic Information, is slack.com allowed in network settings, and is the workspace typographic.slack.com, not the other workspace. Do not post as Jimmy to work around a failed bot check.
