@@ -66,3 +66,10 @@ Add an env block to ~/.claude/settings.json on the Mac, with SLACK_BOT_TOKEN and
 Do not put tokens in a file inside agency-prototypes, and do not commit a settings file with tokens to GitHub. ~/.claude/settings.json is outside the repo, keep it that way.
 
 After tokens are set locally, start a new session in the agency-prototypes folder. That session auto-reads CLAUDE.md from that folder, then read SLACK.md, then run the five verification steps above, then post a top-level status in #ai-workflows as the Claude bot. A resumed old session does not automatically pull in new file changes, so a new session is the clean re-read, not a resume.
+
+## Troubleshooting
+
+- New Terminal tab does not inherit exports from another Terminal window. Export tokens in the same window where you start Claude, or export them again in the new tab, or restart Claude in the original window. Do not close the Terminal window, that loses exports. Restart means exit Claude with /exit, then run claude again in the same window, not quit Terminal.
+- A session that already started will not auto-pull new file changes. Re-read CLAUDE.md and SLACK.md explicitly from disk, or start a new session.
+- Python certificate bundle, Mac, 2026-10-21: python.org Python 3.13 has no certificate bundle installed, so its connections to Slack failed before reaching Slack. Workaround for one run: run with SSL_CERT_FILE=/etc/ssl/cert.pem, the macOS system bundle. Permanent fix: run /Applications/Python 3.13/Install Certificates.command, then re-run the verification. If Slack calls fail with a certificate error, check this before assuming tokens are wrong.
+- slack_verify.py, if used, stays local. List it in .git/info/exclude so git ignores it and it cannot be committed or pushed by accident. That exclude list is a local git setting and is not committed itself.
