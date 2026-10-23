@@ -41,6 +41,19 @@ Cloud and scheduled sessions do not auto-read CLAUDE.md. If you are a cloud or s
 - Never put credentials, tokens, passwords, or API keys in files, chat, or commits. Never copy a credential-filled prompt into a repo.
 - Flow Lab Week 1 is sign-in, mobile only, staple. brand. Do not publish MUJI copy or MUJI product images publicly. Those were cleared for internal training only. Use staple. original copy for public outputs.
 
+## Agency standing rules, summary only
+
+The full text lives in typographic-agency-os, agency/master-brief.md, set 2026-10-22. If this summary and agency-os disagree, agency-os wins. Do not edit these rules here. Change them in agency-os.
+
+Before building, read the agency-os standing rules first. Do not build from this file alone.
+
+1. Verification before done.
+2. Weekly setup review, Recall and Reflect.
+3. Grill before build.
+4. Creator never verifies own fix.
+5. Every build ships a parameter manifest. An unbound parameter fails Design Check, parameter manifest part.
+6. Postmortem after each build.
+
 ## How to work here
 
 - Build standalone, portable HTML files with relative paths.
