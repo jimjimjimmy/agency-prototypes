@@ -196,9 +196,9 @@ function chipRow(id, list, selected, onPick) {
 }
 
 function renderMusicChips() {
-  chipRow('#genres', GENRES, musicUi.genre, (v) => { musicUi.genre = v; applyMusic(); });
-  chipRow('#tempos', TEMPOS, musicUi.tempo, (v) => { musicUi.tempo = v; applyMusic(); });
-  chipRow('#intensities', INTENSITIES, musicUi.intensity, (v) => { musicUi.intensity = v; applyMusic(); });
+  chipRow('#genres', GENRES, musicUi.genre, (v) => { musicUi.genre = v; renderMusicChips(); applyMusic(); });
+  chipRow('#tempos', TEMPOS, musicUi.tempo, (v) => { musicUi.tempo = v; renderMusicChips(); applyMusic(); });
+  chipRow('#intensities', INTENSITIES, musicUi.intensity, (v) => { musicUi.intensity = v; renderMusicChips(); applyMusic(); });
   const el = $('#layers');
   el.innerHTML = LAYERS.map((l) => `<button class="chip${musicUi.layers[l] ? ' is-on' : ''}" data-layer="${l}" aria-pressed="${musicUi.layers[l]}">${l}</button>`).join('');
   el.onclick = (e) => {
