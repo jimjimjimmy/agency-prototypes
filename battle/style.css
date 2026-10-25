@@ -1,0 +1,134 @@
+/* Black and white only in UI. Member color is used only as an avatar background.
+   No grey, no gradient, no shadow, no blur. One bold stroke weight (6 in 200 or 360 unit SVG). */
+:root {
+  --ink: #000;
+  --paper: #fff;
+  color-scheme: light;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.app {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 16px;
+  overflow-x: hidden;
+}
+
+.top {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.top h1 { font-size: 22px; margin: 8px 0; }
+.tag { font-size: 12px; border: 2px solid var(--ink); padding: 2px 6px; }
+
+h2 { font-size: 16px; margin: 20px 0 8px; }
+.note, .status { font-size: 13px; margin: 6px 0; }
+
+.tabs {
+  display: flex;
+  gap: 8px;
+  margin: 8px 0 12px;
+}
+.tab, .chip, .big, .step {
+  font: inherit;
+  color: var(--ink);
+  background: var(--paper);
+  border: 3px solid var(--ink);
+  border-radius: 10px;
+  padding: 8px 10px;
+  min-height: 44px;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+.tab { flex: 1; font-weight: 600; font-size: 14px; }
+.tab.is-on, .chip.is-on, .big.is-on {
+  background: var(--ink);
+  color: var(--paper);
+}
+.big { font-weight: 700; font-size: 16px; width: 100%; }
+.chip { margin: 0 6px 6px 0; font-weight: 600; }
+.chips { display: flex; flex-wrap: wrap; }
+.chip:active, .big:active, .tab:active, .step:active { transform: scale(0.97); }
+
+.screen { display: none; }
+.screen.is-on { display: block; }
+
+.field { display: flex; flex-direction: column; gap: 4px; margin-bottom: 12px; font-size: 13px; }
+.field input, .name {
+  font: inherit;
+  color: var(--ink);
+  background: var(--paper);
+  border: 3px solid var(--ink);
+  border-radius: 10px;
+  padding: 8px 10px;
+  min-height: 44px;
+  width: 100%;
+}
+
+.slots { display: flex; align-items: center; gap: 4px; flex-wrap: wrap; font-size: 13px; margin-bottom: 12px; }
+.slots span { margin-right: 6px; }
+
+/* Band layouts: 2 split, 3 list, 4 grid 2x2 */
+.band { display: grid; gap: 12px; }
+.band.layout-2 { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+.band.layout-3 { grid-template-columns: minmax(0, 1fr); }
+.band.layout-4 { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+.band > .card { min-width: 0; }
+
+.card {
+  border: 3px solid var(--ink);
+  border-radius: 12px;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  background: var(--paper);
+}
+.band.layout-3 .card { flex-direction: row; flex-wrap: wrap; align-items: center; }
+.band.layout-3 .card .avatar { width: 120px; flex: 0 0 120px; }
+.band.layout-3 .card .name { flex: 1 1 100%; }
+.band.layout-3 .card .row { flex: 1 1 auto; }
+
+.avatar { width: 100%; border: 3px solid var(--ink); border-radius: 10px; overflow: hidden; }
+.avatar svg { display: block; width: 100%; height: auto; }
+
+.row { display: flex; align-items: center; gap: 4px; font-size: 13px; min-width: 0; }
+.row .label { width: 84px; flex: 0 0 84px; }
+.row b { flex: 1; min-width: 0; text-align: center; display: flex; align-items: center; justify-content: center; gap: 4px; overflow: hidden; white-space: nowrap; }
+.row .step { min-width: 36px; padding: 4px 6px; font-size: 18px; min-height: 36px; }
+
+/* Two or four members: label sits above the controls so each card fits a phone */
+.band.layout-2 .row, .band.layout-4 .row { flex-direction: column; align-items: stretch; gap: 2px; }
+.band.layout-2 .row .label, .band.layout-4 .row .label { width: auto; flex: none; font-size: 11px; }
+.band.layout-2 .row > div, .band.layout-4 .row > div { display: flex; }
+.band.layout-2 .row b, .band.layout-4 .row b { flex: 1; }
+.sw { display: inline-block; width: 12px; height: 12px; border: 2px solid var(--ink); border-radius: 50%; }
+
+.stats { display: grid; gap: 10px; }
+.stat-card { border: 3px solid var(--ink); border-radius: 12px; padding: 8px; }
+.stat-line { display: flex; align-items: center; gap: 6px; font-size: 13px; margin: 4px 0; }
+.stat-line .label { width: 90px; }
+.stat-line .step { min-width: 40px; min-height: 36px; padding: 4px 6px; }
+.stat-line b { min-width: 36px; text-align: center; }
+
+.transport { margin: 16px 0 8px; }
+
+#scene { width: 100%; height: auto; display: block; border: 3px solid var(--ink); border-radius: 12px; overflow: hidden; background: var(--paper); }
+.tour-btns { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-top: 12px; }
+.tour-btns .big { font-size: 13px; padding: 8px 4px; }
+
+/* Stop reads as fixed while the world moves: the van stays at center */
+#van { transform-box: view-box; }
+.wheel { transform-box: fill-box; transform-origin: center; }
