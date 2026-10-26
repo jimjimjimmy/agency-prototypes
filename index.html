@@ -4,9 +4,24 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Agency Prototypes</title>
+<style>
+:root{--primary:#3E6B34;--surface:#F7FAF3;--on-surface:#191C17;--on-surface-variant:#44483E}
+@media (prefers-color-scheme: dark){:root{--primary:#A4D48D;--surface:#111411;--on-surface:#E1E4DA;--on-surface-variant:#C4C8BC}}
+body{margin:0;font-family:system-ui,sans-serif;font-size:16px;line-height:24px;background:var(--surface);color:var(--on-surface)}
+.wrap{max-width:720px;margin:0 auto;padding:32px 16px}
+h1{font-size:32px;line-height:40px;margin:0 0 8px}
+ul{list-style:none;padding:0}
+a{display:flex;align-items:center;min-height:48px;color:var(--primary);font-weight:500}
+.desc{color:var(--on-surface-variant);margin:0 0 16px}
+</style>
 </head>
 <body>
+<main class="wrap">
 <h1>Agency Prototypes</h1>
-<p>Public, viewable agency builds. First batch: Flow Lab Week 1, coming soon.</p>
+<p>Public, viewable agency builds.</p>
+<ul>
+  <li><a href="flow-lab/weeks/week-01-signin/">Flow Lab Week 1: Sign-in, mobile</a><p class="desc">Four clickable sign-in flows for staple., each testing one hypothesis.</p></li>
+</ul>
+</main>
 </body>
 </html>

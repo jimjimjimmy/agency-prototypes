@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Week 1: OTP auto-read</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Inter+Tight:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root{--primary:#3E6B34;--on-primary:#FFFFFF;--primary-container:#C2E8B4;--on-primary-container:#0A2007;--secondary:#55624C;--secondary-container:#D8E7CB;--on-secondary-container:#131F0E;--tertiary:#38656A;--tertiary-container:#BCEBF1;--on-tertiary-container:#001F24;--error:#BA1A1A;--error-container:#FFDAD6;--on-error-container:#410002;--surface:#F7FAF3;--on-surface:#191C17;--surface-variant:#DFE4D8;--on-surface-variant:#44483E;--scrim:rgba(0,0,0,.4)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--primary:#A4D48D;--on-primary:#143300;--primary-container:#2A4D1E;--on-primary-container:#C2E8B4;--secondary:#BDCBAE;--secondary-container:#3E4A2D;--on-secondary-container:#D8E7CB;--tertiary:#A0CFD6;--tertiary-container:#1F4D54;--on-tertiary-container:#BCEBF1;--error:#FFB4AB;--error-container:#93000A;--on-error-container:#FFDAD6;--surface:#111411;--on-surface:#E1E4DA;--surface-variant:#44483E;--on-surface-variant:#C4C8BC;--scrim:rgba(0,0,0,.6)}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--surface);color:var(--on-surface);font-family:Inter,system-ui,sans-serif;font-size:16px;line-height:24px;min-height:100vh}
+.wrap{max-width:420px;margin:0 auto;padding:24px 16px;display:flex;flex-direction:column;gap:16px;min-height:100vh}
+.wordmark{font-family:'Inter Tight',Inter,sans-serif;font-weight:600;letter-spacing:-0.04em;font-size:24px;line-height:32px}
+.wordmark span{color:var(--primary)}
+.tag{font-size:12px;line-height:16px;color:var(--on-surface-variant);font-weight:500;letter-spacing:.04em;text-transform:uppercase;margin:0}
+h1{font-family:'Inter Tight',Inter,sans-serif;font-size:28px;line-height:36px;font-weight:600;margin:4px 0 0}
+h2{font-family:'Inter Tight',Inter,sans-serif;font-size:22px;line-height:28px;font-weight:500;margin:0}
+h1:focus{outline:none}
+.lede{margin:0;color:var(--on-surface-variant)}
+.btn{min-height:48px;border-radius:999px;border:0;font:inherit;font-weight:500;padding:0 24px;width:100%;cursor:pointer}
+.btn-filled{background:var(--primary);color:var(--on-primary)}
+.btn-tonal{background:var(--secondary-container);color:var(--on-secondary-container)}
+.btn-text{background:none;color:var(--primary)}
+:focus-visible{outline:2px solid var(--primary);outline-offset:2px}
+.fieldset{display:flex;flex-direction:column;gap:4px}
+label{font-size:14px;line-height:20px;font-weight:500;color:var(--on-surface-variant)}
+.field{min-height:56px;border-radius:12px;border:1px solid var(--on-surface-variant);padding:0 16px;background:transparent;color:var(--on-surface);font:inherit;width:100%}
+.field[aria-invalid="true"]{border:2px solid var(--error);padding:0 15px}
+.err{color:var(--error);font-size:14px;line-height:20px;margin:0}
+.err:empty{margin:0}
+.banner{background:var(--error-container);color:var(--on-error-container);border-radius:12px;padding:12px 16px;font-size:14px;line-height:20px;margin:0}
+.banner:empty{padding:0;background:none;margin-bottom:-16px}
+.screen{display:none;flex-direction:column;gap:16px}
+.screen.on{display:flex}
+.scrim{position:fixed;inset:0;background:var(--scrim);display:none;align-items:flex-end;justify-content:center}
+.scrim.on{display:flex}
+.sheet{background:var(--surface);width:100%;max-width:420px;border-radius:28px 28px 0 0;padding:24px 16px 32px;display:flex;flex-direction:column;gap:12px}
+.row{display:flex;justify-content:space-between;gap:16px;border-bottom:1px solid var(--surface-variant);padding:12px 0}
+.state{color:var(--tertiary);font-weight:600}
+.spin{width:28px;height:28px;border-radius:50%;border:4px solid var(--primary-container);border-top-color:var(--primary);animation:s 1s linear infinite;margin:0 auto}
+@keyframes s{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion: reduce){.spin{animation:none}}
+.code{font-family:ui-monospace,monospace;letter-spacing:.3em;font-size:20px}
+.prod{width:100%;aspect-ratio:1/1;object-fit:cover;border-radius:12px;display:block}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <div class="wordmark">staple<span>.</span></div>
+  <p class="tag">Hypothesis 4 · OTP auto-read over password</p>
+
+  <section class="screen on" id="start" aria-labelledby="start-h">
+    <h1 id="start-h">Welcome back</h1>
+    <p class="lede">Sign in with your mobile number. We'll text you a code.</p>
+    <div class="fieldset">
+      <label for="phone">Mobile number</label>
+      <input class="field" type="tel" id="phone" inputmode="tel" autocomplete="tel-national" aria-describedby="phone-err" aria-invalid="false">
+      <p class="err" id="phone-err" role="alert"></p>
+    </div>
+    <button type="button" class="btn btn-filled" onclick="sendCode()">Text me a code</button>
+  </section>
+  <section class="screen" id="code-screen" aria-labelledby="code-h">
+    <h1 id="code-h">Enter the code</h1>
+    <p class="lede">We texted a code to <strong id="sent-to"></strong>.</p>
+    <p class="tag" id="autofill-tag" role="status">Waiting for the code</p>
+    <div class="fieldset">
+      <label for="code">Code</label>
+      <input class="field code" id="code" inputmode="numeric" autocomplete="one-time-code" maxlength="6" aria-describedby="code-err" aria-invalid="false">
+      <p class="err" id="code-err" role="alert"></p>
+    </div>
+    <button type="button" class="btn btn-filled" onclick="verify()">Verify</button>
+    <button type="button" class="btn btn-text" onclick="reset()">Use a different number</button>
+  </section>
+  <div class="scrim" id="sms"><div class="sheet" role="dialog" aria-modal="true" aria-labelledby="sms-h">
+    <h2 id="sms-h">From Messages</h2>
+    <button type="button" class="btn btn-tonal" onclick="autofill()">Use code 482913</button>
+    <button type="button" class="btn btn-text" onclick="dismissSms()">Not now</button>
+  </div></div>
+
+  <section class="screen" id="status" aria-labelledby="status-h">
+    <img class="prod" src="assets/flat-lay.webp" alt="Black scissors, a wooden ruler, an eraser, and paper clips on a white desk">
+    <h1 id="status-h">Your order was delivered</h1>
+    <div class="row"><span>Desk set: scissors, ruler, eraser, clips</span><span>$18.00</span></div>
+    <div class="row"><span class="state">Delivered</span><span>Sun, Oct 25</span></div>
+    <button type="button" class="btn btn-tonal" onclick="reset()">Start over</button>
+  </section>
+</main>
+<script>
+var timers=[];
+function show(id){document.querySelectorAll('.screen').forEach(function(s){s.classList.remove('on')});var el=document.getElementById(id);el.classList.add('on');var h=el.querySelector('h1');if(h){h.setAttribute('tabindex','-1');h.focus();}}
+var openSheet=null,returnTo=null,onEscape={};
+function sheet(id,on,focusAfter){var el=document.getElementById(id);el.classList.toggle('on',on);
+document.querySelectorAll('main > :not(.scrim)').forEach(function(n){n.inert=on;});
+if(on){openSheet=id;returnTo=document.activeElement;var b=el.querySelector('button');if(b)b.focus();}
+else{openSheet=null;var t=focusAfter||returnTo;if(t&&t.getClientRects().length)t.focus();else{var h=document.querySelector('.screen.on h1');if(h){h.setAttribute('tabindex','-1');h.focus();}}returnTo=null;}}
+document.addEventListener('keydown',function(e){if(e.key==='Escape'&&openSheet&&onEscape[openSheet])onEscape[openSheet]();});
+function setErr(field,msg){var f=document.getElementById(field),e=document.getElementById(field+'-err');e.textContent=msg;f.setAttribute('aria-invalid',msg?'true':'false');if(msg)f.focus();}
+function banner(msg){document.getElementById('banner').textContent=msg;}
+function reset(){timers.forEach(clearTimeout);timers=[];document.querySelectorAll('.scrim').forEach(function(s){s.classList.remove('on')});document.querySelectorAll('main > *').forEach(function(n){n.inert=false;});openSheet=null;returnTo=null;document.querySelectorAll('input').forEach(function(i){i.value='';i.setAttribute('aria-invalid','false')});document.querySelectorAll('.err,.banner').forEach(function(e){e.textContent=''});if(window.onReset)onReset();show('start');}
+
+function sendCode(){var d=document.getElementById('phone').value.replace(/\D/g,'');
+if(!d){setErr('phone','Enter your mobile number.');return;}
+if(d.length!==10){setErr('phone','Enter a 10-digit mobile number.');return;}
+setErr('phone','');document.getElementById('sent-to').textContent='(\u2022\u2022\u2022) \u2022\u2022\u2022-'+d.slice(-4);show('code-screen');
+timers.push(setTimeout(function(){if(document.getElementById('code-screen').classList.contains('on')&&!document.getElementById('code').value)sheet('sms',true);},1200));}
+function autofill(){var c=document.getElementById('code');c.value='482913';sheet('sms',false,c);document.getElementById('autofill-tag').textContent='Code filled from Messages';}
+function verify(){var v=document.getElementById('code').value.trim();if(!/^\d{6}$/.test(v)){setErr('code','Enter the 6-digit code we texted you.');return;}timers.forEach(clearTimeout);timers=[];setErr('code','');show('status');}
+function dismissSms(){sheet('sms',false,document.getElementById('code'));}
+onEscape.sms=dismissSms;
+function onReset(){document.getElementById('autofill-tag').textContent='Waiting for the code';}
+</script>
+</body>
+</html>

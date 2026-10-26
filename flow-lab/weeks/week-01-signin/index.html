@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Flow Lab Week 1: Sign-in</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Inter+Tight:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root{--primary:#3E6B34;--on-primary:#FFFFFF;--secondary-container:#D8E7CB;--on-secondary-container:#131F0E;--surface:#F7FAF3;--on-surface:#191C17;--surface-variant:#DFE4D8;--on-surface-variant:#44483E}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--primary:#A4D48D;--on-primary:#143300;--secondary-container:#3E4A2D;--on-secondary-container:#D8E7CB;--surface:#111411;--on-surface:#E1E4DA;--surface-variant:#44483E;--on-surface-variant:#C4C8BC}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--surface);color:var(--on-surface);font-family:Inter,system-ui,sans-serif;font-size:16px;line-height:24px}
+.wrap{max-width:720px;margin:0 auto;padding:32px 16px 48px;display:flex;flex-direction:column;gap:24px}
+.wordmark{font-family:'Inter Tight',Inter,sans-serif;font-weight:600;letter-spacing:-0.04em;font-size:24px;line-height:32px}
+.wordmark span{color:var(--primary)}
+h1{font-family:'Inter Tight',Inter,sans-serif;font-size:32px;line-height:40px;font-weight:600;margin:0}
+h2{font-family:'Inter Tight',Inter,sans-serif;font-size:22px;line-height:28px;font-weight:500;margin:0}
+p{margin:0}
+.lede{color:var(--on-surface-variant)}
+.flows{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+.flows a{display:flex;flex-direction:column;gap:8px;min-height:48px;padding:16px;border-radius:16px;background:var(--secondary-container);color:var(--on-secondary-container);text-decoration:none}
+.flows a:focus-visible{outline:3px solid var(--primary);outline-offset:2px}
+.flows .n{font-size:12px;line-height:16px;font-weight:500;letter-spacing:.04em;text-transform:uppercase}
+.small{font-size:14px;line-height:20px;color:var(--on-surface-variant)}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <div class="wordmark">staple<span>.</span></div>
+  <h1>Flow Lab Week 1: Sign-in</h1>
+  <p class="lede">Mobile only. A returning customer on the couch who just wants to check an order. Four ways to sign in, each testing one hypothesis. Every flow is clickable from sign-in to order status, with its failure and reset states.</p>
+  <ul class="flows">
+    <li><a href="builds/variation-1-passkey-first.html"><span class="n">Hypothesis 1</span><h2>Passkey-first</h2><span>A passkey as the main action, password as the fallback.</span></a></li>
+    <li><a href="builds/variation-2-guest-order-status.html"><span class="n">Hypothesis 2</span><h2>Guest order status</h2><span>No password: an emailed sign-in link goes straight to the order.</span></a></li>
+    <li><a href="builds/variation-3-social-over-otp.html"><span class="n">Hypothesis 3</span><h2>Social over OTP</h2><span>Google or Apple first, an emailed code as the fallback.</span></a></li>
+    <li><a href="builds/variation-4-otp-auto-read.html"><span class="n">Hypothesis 4</span><h2>OTP auto-read</h2><span>A texted code that fills itself in, instead of a password.</span></a></li>
+  </ul>
+  <p class="small">Prototypes with test copy. No real sign-in happens and nothing you type is sent anywhere. Built with Material 3 and the staple. identity.</p>
+</main>
+</body>
+</html>
